@@ -1,0 +1,46 @@
+{
+  "books": [
+    {
+      "id": "17",
+      "title": "",
+      "description": "",
+      "authors": "",
+      "favorite": "",
+      "fileCover": "",
+      "fileName": "",
+      "fileBook": ""
+    },
+    {
+      "id": "18",
+      "title": "",
+      "description": "",
+      "authors": "",
+      "favorite": "",
+      "fileCover": "",
+      "fileName": "",
+      "fileBook": ""
+    },
+    {
+      "id": "19",
+      "metaInfo": {
+        "title": "",
+        "description": "",
+        "authors": "",
+        "favorite": "",
+        "fileCover": "",
+        "fileName": "",
+        "fileBook": ""
+      },
+      "fileInfo": {
+        "fieldname": "bookFile",
+        "originalname": "sample.txt",
+        "encoding": "7bit",
+        "mimetype": "text/plain",
+        "destination": "uploads/",
+        "filename": "c91a934ed5889c0372660def43c85c06",
+        "path": "uploads/c91a934ed5889c0372660def43c85c06",
+        "size": 21
+      }
+    }
+  ]
+}
