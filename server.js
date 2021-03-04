@@ -81,7 +81,9 @@ const getBookController = (req, res) => {
 };
 apiRouter.get("/books/:id", /*(req,res) => /*getBookController(req,res)*/(req, res) => {
   const book = getBook(req.params.id);
-  book === undefined ? res.status(404).send("Not found!") : res.render("view.ejs",{book:book})/*res.json(book)*/;
+  book === undefined 
+    ? res.status(404).send("Not found!") 
+    : res.send(/*render("view.ejs",{book:book}*/res.json(book));
 });
 apiRouter.post("/book", upload.single("bookFile"), (req, res) => {
   const dbBooks = getBooks();
