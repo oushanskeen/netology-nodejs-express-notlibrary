@@ -32,7 +32,7 @@ const makeBook = (book) => ({
 const getBooks = () => db.get("books").value();
 const postUser = payload =>
  db
-    .get("users")
+   .get("users")
     .push({ ...payload })
     .write();
 const getUser = id =>
@@ -67,15 +67,23 @@ apiRouter.post("/api/user/login", (req, res) => {
   postUser(req.body);
   res.status(201).json(getUser(req.body.id));
 });
-apiRouter.get("/api/books", (req, res) => 
-  res.json(getBooks())
-);
+const getBooksController = (req, res, next) => {
+  const out = res.json(getBooks());
+  console.log("getBooksController out: ", out);
+  //next();
+};
+apiRouter.get("/books", (req,res,next) => getBooksController(req,res,next));
 
-apiRouter.get("/api/books/:id", (req, res) => {
+
+const getBookController = (req, res) => {
   const book = getBook(req.params.id);
   book === undefined ? res.status(404).send("Not found!") : res.json(book);
+};
+apiRouter.get("/books/:id", /*(req,res) => /*getBookController(req,res)*/(req, res) => {
+  const book = getBook(req.params.id);
+  book === undefined ? res.status(404).send("Not found!") : res.render("view.ejs",{book:book})/*res.json(book)*/;
 });
-apiRouter.post("/api/book", upload.single("bookFile"), (req, res) => {
+apiRouter.post("/book", upload.single("bookFile"), (req, res) => {
   const dbBooks = getBooks();
   console.log("On Post Body: ", JSON.stringify(req.body));
   console.log("On Post File: ", JSON.stringify(req.file));
@@ -86,7 +94,7 @@ apiRouter.post("/api/book", upload.single("bookFile"), (req, res) => {
   addBook(newBook);
   res.json(getBook(newId));
 });
-apiRouter.put("/api/books/:id", (req, res) => {
+apiRouter.put("/books/:id", (req, res) => {
   const bookYouNeed = getBooks().filter(e => e.id === req.params.id)[0];
   const newBook = { id: req.params.id, ...req.body };
   putBook(req.params.id, req.body.content);
@@ -94,11 +102,16 @@ apiRouter.put("/api/books/:id", (req, res) => {
     ? res.status(404).send("Nothing to change!")
     : res.json(getBook(req.params.id));
 });
-apiRouter.delete("/api/books/:id", (req, res) => {
-  deleteBook(req.params.id);
-  res.end("Ok");
+apiRouter.get("/book/delete/:id", (req,res) => {
+  res.redirect()
 });
-apiRouter.get('/api/books/:id/download',(req,res)=>{
+apiRouter.delete("/books/:id", (req, res) => {
+  console.log("Delete book action triggered!");
+  deleteBook(req.params.id);
+  //res.end("Ok");
+  res.redirect("/index");
+});
+apiRouter.get('/books/:id/download',(req,res)=>{
   const book = getBook(req.params.id);
   console.log("Book to download: ", book);
   res.download(`${__dirname}/${book.fileInfo.path}`);
@@ -106,20 +119,25 @@ apiRouter.get('/api/books/:id/download',(req,res)=>{
 
 // views
 //app.get("/index", (req,res) => res.render("index.ejs",{books:["bookeOne", "bookTwo","bookThree"]}));
-app.get("/index", (req,res) => 
+app.get('/', (req,res) => res.redirect("/index"));
+app.get('/index', async (req,res, next) => {
   res.render(
     "index.ejs",
-    {books:[...getBooks()]}
+    {books:getBooks()}
   )
-);
+});
 app.get("/view", (req,res) => 
   res.render("view.ejs",{book:"single stub book"})
 );
 app.get("/create", (req,res) => res.render("create.ejs"));
-app.get("/update", (req,res) => res.render("update.ejs",{book:"simplw stub book from outside"}));
+app.get("/update/:id", (req,res) => {
+  const book = getBook(req.params.id);
+  console.log("Book for update: ", book);
+  res.render("update.ejs",{book:book})
+});
 
-//app.use("/api", apiRouter);
-app.use("/", apiRouter);
+app.use("/api", apiRouter);
+//app.use("/", apiRouter);
 
 const PORT = process.env.PORT || 3031;
 http

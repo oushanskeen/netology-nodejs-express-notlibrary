@@ -1,5 +1,21 @@
-<% books.map((e,i) => {%>
-<div> 
-   <%= i%> <%= e.content %>
+<% books.map((/*{id}*/book,i) => {%>
+  <div>
+    <%console.log("bookjs insde index: ", books)%>
+    <div>
+      <%= i%> 
+      <a href=<%=`/api/books/${book.id}`%>>
+        <%= JSON.stringify(book) %>
+      </a>
+      <a href=<%=`/api/books/${book.id}` %> data-method="DELETE">
+        <button>delete</button>
+      </a>
+      <a href=<%=`/update/${book.id}` %>>
+        <button>update</button>
+      </a>
+    </div>
+  </div>
+<%}) %>
+<div>
+  <a href="/create"><button>add book</button></a>
 </div>
-<% }) %>
+
