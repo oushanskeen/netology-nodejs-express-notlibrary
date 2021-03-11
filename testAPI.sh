@@ -8,7 +8,7 @@ getAll(){
   curl "$URL"
 }
 getOneSuccess(){
-  curl "$URL/1"
+  curl -v "$URL/1"
 }
 getOneFail(){
   curl -v "$URL/100"
@@ -22,6 +22,7 @@ postLogin(){
 }
 postBook(){
   curl -X POST \
+    -v\
     -H "Content-type: application/json" \
     --data '{"content":"pineappletrees"}'\
     "$URL"
@@ -44,22 +45,22 @@ calls(){
   printf "\n"
   printf "\n GET ALL\n"
   getAll
-  printf "\n"
-  printf "\$ GET ONE BOOK SUCCESS\n"
-  getOneSuccess
-  printf "\n"
+  #printf "\n"
+  #printf "\$ GET ONE BOOK SUCCESS\n"
+  #getOneSuccess
+  #printf "\n"
   #printf "\$ GET ONE BOOK FAIL\n"
   #getOneFail
   #printf "\n"
-  printf "\n POST BOOK\n"
-  postBook 
-  printf "\n"
-  printf "\n PUT SUCCESS\n"
-  putBookSuccess
-  printf "\n"
-  printf "\n DELETE\n"
-  delete
-  printf "\n"
+  #printf "\n POST BOOK\n"
+  #postBook 
+  #printf "\n"
+  #printf "\n PUT SUCCESS\n"
+  #putBookSuccess
+  #printf "\n"
+  #printf "\n DELETE\n"
+  #delete
+  #printf "\n"
 }
 
 calls 
