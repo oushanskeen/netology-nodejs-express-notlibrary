@@ -26,11 +26,11 @@ app.set("view engine", "ejs");
 const url = 'mongodb://localhost:27017/library';
 const AtlasDB = `mongodb+srv://oushanskeen:${process.env.MONGO_PSWD}@library-database.1irwr.mongodb.net/test?retryWrites=true&w=majority`
 mongoose.connect(
-  /*url*/AtlasDB,
+  url/*AtlasDB*/,
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 const mdb = mongoose.connection;
-mdb.once("open", _ => console.log("Dodoctest connected: ", url));
+mdb.once("open", _ => console.log("Library connected: ", url));
 mdb.on("error", err => {
   console.error("connection error: ", err);
 })
