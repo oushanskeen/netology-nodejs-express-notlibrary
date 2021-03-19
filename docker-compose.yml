@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+  library:
+    image: library
+    restart: always
+    ports: 
+      - 3031:3031
+    environment:
+      PORT: 3031
+      COUNTER_URL: "http://counter:3032"
+    volumes:
+      -data:/home/oushanskeen/Documents/The Library/data
+  counter:
+    image: eca2a3308191
+    ports:
+      - 3032:3032
+    environment:
+      PORT: 3032
+volumes:
+  data:
+    external:
+      name: /home/oushanskeen/Documents/The Library/data
