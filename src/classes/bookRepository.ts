@@ -1,3 +1,4 @@
+/*
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const lowdb = require("lowdb");
@@ -8,10 +9,11 @@ const http = require("http");
 const fs = require("fs");
 
 const isCallToApi = requestString => Boolean(requestString.match(/api/gi));
-
+*/
+/*
 export class BooksRepository {
-  constructor(givenRepository){
-    this.currentRepository = givenRepository;
+  constructor(currentRepository){
+    this.currentRepository = currentRepository;
   }
   public createBook(bookData:Book){
     currentRepository.insert(bookData);
@@ -35,7 +37,7 @@ export class BooksRepository {
   updateBook = (id,newValue) => db.set(`books.${id}`, newValue).write();
   deleteBook = (id) => db.get("books").remove({ id: id }).write();
   */
-}
+//}
 /*
 BooksRepository.createBook({...mockedBook})
 BooksRepository.getBook(1)
@@ -120,4 +122,4 @@ module.exports = app => {
   app.put("/api/books(/:id)?", getBookTwo);
   app.delete("/api/books/:id", deleteBook);
 };jkk
-"/
+*/

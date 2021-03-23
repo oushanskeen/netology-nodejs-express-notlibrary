@@ -1,8 +1,10 @@
+import mongoose from "mongoose";
 require("reflect-metadata");
+//const mongoose = require("mongoose");
 const Container = require("inversify").Container;
 const injectable = require("inversify").injectable;
 
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 const http = require("http");
 const Book = require("../../models/book");
 mongoose.set("useFindAndModify", false);
@@ -154,7 +156,9 @@ const otherResult = ioc.use("testService").create({ id: 2 });
 console.log("Some other DIY ioc example: ", otherResult);
 */
 @injectable()
-class BookRepository {
+class BookRepository{
+  db:any;
+
   constructor(db) {
     this.db = db;
   }
@@ -232,7 +236,7 @@ const getBookCounter = bookId => {
 const getBookHandler = async (req, res) => {
   const { id } = req.params;
   console.log("BOOK ID: ", id);
-  //const booksData = await bookRepository.getOneBook(id);
+  const booksData = await bookRepository.getOneBook(id);
   //const booksData = await ioc.use("bookRepository").getOneBook(id);
   try {
     res.status(200).json(booksData || "stub book data");
@@ -243,7 +247,7 @@ const getBookHandler = async (req, res) => {
 const postBookHandler = async (req, res) => {
   console.log("POST BOOK TRIGERED");
   const { body } = req;
-  //const response = await Book.create(body);
+  const response = await Book.create(body);
   //const booksData = await bookRepository.createBook(body);
   //const booksData = await ioc.use("bookRepository").createBook(body);
   try {
@@ -257,17 +261,17 @@ const putBookHandler = async (req, res) => {
   const { id } = req.params;
   console.log("PUT BOOK TRIGERED");
   console.log("ID: ", id);
-  //const booksData = await bookRepository.updateBook(`${id}`,body);
+  const booksData = await bookRepository.updateBook(`${id}`,body);
   //const booksData = await ioc.use("bookRepository").updateBook(`${id}`, body);
   try {
-    res.status(200).json(response || "stub reponse");
+    res.status(200).json(booksData || "stub reponse");
   } catch (err) {
     res.status(500).send(err);
   }
 };
 const deleteBookHandler = async (req, res) => {
   const { id } = req.params;
-  //let response = await Book.deleteOne({ id: id });
+  let response = await Book.deleteOne({ id: id });
   //const response = await bookRepository.deleteBook(id);
   //const booksData = await ioc.use("bookRepository").deleteBook(id);
   try {

@@ -1,5 +1,5 @@
-const express = require("express");
-let mongoose = require('mongoose');
+import express from "express";
+import mongoose  from 'mongoose';
 const multer = require("multer");
 const upload = multer({dest:"uploads/"});
 const app = express();
@@ -7,9 +7,9 @@ const path = require("path");
 const http = require("http");
 const apiRouter = express.Router();
 const bodyParser = require("body-parser");
-const booksRouter = require("./src/api/routes/books");
+const booksRouter = require("./api/routes/books");
 
-const Book = require("./src/models/book");
+const Book = require("./models/book");
 mongoose.set("useFindAndModify", false);
 
 
@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, "./public")));
 booksRouter(app);
 app.use("/books",booksRouter);
 
-const PORT = process.env.PORT || 3031;
+const PORT = /*process.env.PORT || */3033;
 http
   .createServer(app)
   .listen(PORT, () =>

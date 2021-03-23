@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const lowdb = require("lowdb");
@@ -121,5 +121,5 @@ module.exports = app => {
     //console.log(db.get("books"))
     res.end("Ok");
   });
-});
+};
 module.exports = router;

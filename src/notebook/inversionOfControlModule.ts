@@ -1,3 +1,4 @@
+/*
 class Hello{
   trueSayHello;
   constructor(f){
@@ -11,3 +12,4 @@ class Hello{
 
 const hello1 = new Hello();
 hello1.sayHello(console.log("Me True Hello!"));
+*/
